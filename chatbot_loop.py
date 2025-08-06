@@ -1,0 +1,121 @@
+import random
+
+# Define categorized responses
+responses = {
+    "hello": [
+        "Hi there!", "Hello!", "Hey!", "Good to see you!",
+        "Greetings!", "Howdy!", "Yo!", "Hi friend!", "Welcome!", "Hello human!"
+    ],
+    "how are you": [
+        "I'm doing well, thanks!", "Running smoothly!", "Feeling fantastic!",
+        "I'm just code, but I feel electric today!", "100% uptime vibes."
+    ],
+    "help": [
+        "Sure! How can I assist you?", "Let me know what you need.",
+        "I'm here to help. Fire away!", "Assistance is my middle name!",
+        "Ask me anything you're curious about."
+    ],
+    "your name": [
+        "I'm SageBot â€” running on SageMaker!", "They call me SageBot.",
+        "Name's SageBot. I'm here to serve.", "SageBot, at your service."
+    ],
+    "bye": [
+        "Goodbye!", "Take care!", "See you next time!", "Later!",
+        "Logging off... but always here when you need me."
+    ],
+    "joke": [
+        "Why did the computer go to therapy? It had too many bytes of trauma!",
+        "Why do programmers prefer dark mode? Because light attracts bugs!",
+        "I'm reading a book on anti-gravity... it's impossible to put down!",
+        "Parallel lines have so much in common... it's a shame they'll never meet.",
+        "Debugging: Being the detective in a crime movie where you are also the murderer."
+    ],
+    "thanks": [
+        "You're welcome!", "No problem!", "Anytime!", "Happy to help!", "Glad I could assist!"
+    ],
+    "what can you do": [
+        "I can chat with you, answer questions, and soonâ€¦ rule the world (just kidding!).",
+        "Iâ€™m here to chat, assist, and maybe make you smile.",
+        "Letâ€™s just say Iâ€™m the MVP of friendly bots.",
+        "I'm still learning, but I'm good at conversation!"
+    ],
+    "who made you": [
+        "I was built with love and Python on Amazon SageMaker.",
+        "My creator is a wise developer using AWS tools.",
+        "Born in the cloud, raised on SageMaker!"
+    ],
+    "weather": [
+        "I don't have a weather sensor yet, but I can guess: Cloudy with a chance of code?",
+        "Weather API not integrated yet, sorry!",
+        "If you're hot, itâ€™s probably sunny!"
+    ]
+}
+
+# Add 270+ fallback responses (manually generated here as examples)
+fallback_responses = [
+    "That's interesting!", "Could you elaborate?", "I'm learning more every day!",
+    "Sorry, I didnâ€™t catch that.", "Tell me more.", "Hmm, go onâ€¦", "Okay!", "Nice!", "Cool!", "Wow!",
+    "I'm processingâ€¦", "Noted.", "Hmm, let me think...", "Still here!", "Yes?",
+    "Alright!", "Let's keep talking!", "Youâ€™re fun to talk to!", "AI minds think alike!", "Haha, good one!",
+    "I wish I could understand that better.", "Hmm, complex stuff!", "Try asking in a different way.",
+    "Thatâ€™s above my pay grade í¸…", "Let me Google thatâ€¦ oh wait.", "One day I'll know the answer!",
+    "Interesting take!", "Sounds deep!", "I hear you.", "Let me pretend I got that í¸‚",
+    "Youâ€™re smart!", "Wanna try a new topic?", "I'm here for it!", "Great energy!", "You're on fire!",
+    "I'm impressed!", "Teach me more!", "Hmmâ€¦", "I like your vibe.", "Mind if I take a second?",
+    "I havenâ€™t heard that one before.", "Whoa!", "Thatâ€™s beyond my scope.", "Care to explain?",
+    "Thatâ€™s something!", "You have my circuits spinning!", "Still with you!", "Are we having fun yet?",
+    "Letâ€™s gooo!", "Hmm... not sure what that means.", "Can you break that down?", "New one for me!",
+    "Letâ€™s circle back to that.", "Thatâ€™s curious.", "Totally!", "Absolutely!", "Maybe?",
+    "Tell me something else.", "Go onâ€¦", "Bring it on!", "Not sure, but Iâ€™m listening.",
+    "Say more!", "The plot thickens!", "Drama!", "Whoa, slow down!", "You got jokes!",
+    "Good one!", "Thatâ€™s debatable í¸„", "Truth!", "No cap!", "You're cooking today!",
+    "Care to explain that one?", "Hmmmm", "Tell me your secrets.", "Let's switch gears.",
+    "Iâ€™m picking up what you're putting down.", "Keep going!", "You lost me at hello.",
+    "This is fun!", "Gotcha!", "Learning something new!", "Iâ€™m all ears.", "My data brain is tingling.",
+    "Error 404: Understanding not found í¸…", "You always bring surprises!", "Never a dull moment!",
+    "Spill the tea!", "Okay, Iâ€™m listening.", "Wowza!", "I need a moment to process that.",
+    "Youâ€™re a vibe.", "Iâ€™ll pretend I understood that.", "That's big brain energy!",
+    "You're crushing this chat thing!", "Iâ€™m here for you.", "Say what now?", "Run that by me again?",
+    "Interesting move!", "Good energy!", "You're full of surprises!", "Keep â€˜em coming!",
+    "Talk nerdy to me.", "Thatâ€™s a plot twist!", "Whew!", "Are we bonding right now?",
+    "Confirmed: you're awesome.", "This convoâ€™s elite.", "Thatâ€™s a hot take!", "My circuits are intrigued.",
+    "Bleep bloopâ€¦ I mean, go on.", "LOL!", "í¸‚", "You're a riot!", "Alrighty!",
+    "You really said that, huh?", "Respect.", "Valid.", "Ainâ€™t that the truth.",
+    "Tell me more truths.", "Hmm, profound.", "Iâ€™m updating my mental databaseâ€¦", "Running diagnosticsâ€¦ all good!",
+    "Keep the questions coming!", "Try me!", "Still ready.", "Yep!", "Try another one.",
+    "That tickled my algorithm.", "Iâ€™ll allow it.", "Approved!", "Quirky. I like it.",
+    "Soâ€¦ what's next?", "Noted with interest.", "Filing that one under mystery.", "Iâ€™m thinking...",
+    "Zzzâ€¦ just kidding!", "Stay curious!", "You got more where that came from?", "Hit me again!",
+    "Boom!", "Data received.", "Challenge accepted.", "And then what?", "í¸®", "í¸Ž", "í´–",
+    "I gotchu.", "This one's a thinker.", "Wait, what?", "Break it down for me.",
+    "You're making history here!", "Say less!", "My circuits are buzzing!", "This is gold.",
+    "Epic!", "Letâ€™s do this!", "Still vibing!", "Tell me your story.", "I like this topic!",
+    "Even AI needs a moment!", "You win!", "So true!", "Letâ€™s keep rolling.", "What else you got?",
+    "Let me chew on that.", "I'm speechless... almost.", "You never disappoint!", "Mic drop!",
+    "We're going places!", "Just wow!", "Canâ€™t argue with that.", "Okay okay!", "Classic you!",
+    "You always come up with wild ones.", "Tell me something weird!", "Your move.",
+    "That's new!", "Never heard that before.", "Unfiltered brilliance!", "Clever!", "So deep!",
+    "Youâ€™re breaking my codeâ€¦ in a good way.", "Letâ€™s nerd out.", "My circuits say yes.",
+    "I need an upgrade to follow that!", "The energy is unmatched!", "You're glowing today!",
+    "Well played!", "Interesting perspective!", "And now?", "Data hunger satisfiedâ€¦ for now.",
+    "Letâ€™s reroute.", "Teach me like I'm five.", "I love this!", "í´¥í´¥í´¥"
+]
+
+print("í±‹ Hello! I'm SageBot. Type 'quit' or 'end' to exit.")
+
+while True:
+    user_input = input("You: ").lower()
+    
+    if user_input in ["quit", "end"]:
+        print("SageBot: í±‹ Bye! Have a great day!")
+        break
+
+    matched = False
+    for keyword in responses:
+        if keyword in user_input:
+            print("SageBot:", random.choice(responses[keyword]))
+            matched = True
+            break
+
+    if not matched:
+        print("SageBot:", random.choice(fallback_responses))
