@@ -1,10 +1,10 @@
-# í´– Amazon SageMaker Chatbot Project
+# ğŸ¤– Amazon SageMaker Chatbot Project
 
 This project demonstrates how to build a simple rule-based chatbot using **Amazon SageMaker** and Python. The chatbot accepts continuous user input, processes it with predefined logic, and generates interactive responses until the user exits the conversation.
 
 ---
 
-## í³Œ Features
+## ğŸ“Œ Features
 - Continuous interactive loop
 - 300+ smart, quirky, and fallback responses
 - Easy to run on Amazon SageMaker Notebook Instances
@@ -12,7 +12,7 @@ This project demonstrates how to build a simple rule-based chatbot using **Amazo
 
 ---
 
-## í³ Project Structure
+## ğŸ“ Project Structure
 
 sagemaker-chatbot/
 â”œâ”€â”€ chatbot_loop.py              # Main chatbot script with interactive loop and responses
@@ -25,7 +25,7 @@ sagemaker-chatbot/
 
 ---
 
-## íº€ How to Run
+## ğŸš€ How to Run
 
 1. Launch an Amazon SageMaker notebook instance
 2. Open a new Jupyter notebook (e.g., `chatbot_sagemaker.ipynb`)
@@ -34,29 +34,29 @@ sagemaker-chatbot/
 
 ---
 
-## í´§ Technologies Used
+## ğŸ”§ Technologies Used
 - Amazon SageMaker
 - Python 3
 - Jupyter Notebooks
 
 ---
 
-## í³¸ Screenshots
+## ğŸ“¸ Screenshots
 
 | Chatbot Running | Terminal Interaction |
 |-----------------|----------------------|
-| ![Notebook](/Screenshot/Notebook.png) | ![Chat](/Screenshot/chat.png) |
+| ![Notebook](/Screenshot/Test.png) | ![Chat](/Screenshot/chat.png) |
 
 ---
 
-## í¼ Future Improvements
+## ğŸŒ Future Improvements
 - Integrate HuggingFace Transformers or OpenAI API
 - Deploy as RESTful API with SageMaker Endpoint
 - Add memory/context retention
 
 ---
 
-## í±¤ Author
+## ğŸ‘¤ Author
 
 Samuel Opeyemi Oni  
 [LinkedIn](https://www.linkedin.com/in/oni-samuel-6b1820267/) | [GitHub](https://github.com/OniSamuelOpeyemi)
