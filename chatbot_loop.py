@@ -58,8 +58,8 @@ fallback_responses = [
     "I'm processingâ€¦", "Noted.", "Hmm, let me think...", "Still here!", "Yes?",
     "Alright!", "Let's keep talking!", "Youâ€™re fun to talk to!", "AI minds think alike!", "Haha, good one!",
     "I wish I could understand that better.", "Hmm, complex stuff!", "Try asking in a different way.",
-    "Thatâ€™s above my pay grade í¸…", "Let me Google thatâ€¦ oh wait.", "One day I'll know the answer!",
-    "Interesting take!", "Sounds deep!", "I hear you.", "Let me pretend I got that í¸‚",
+    "Thatâ€™s above my pay grade ï¿½ï¿½ï¿½", "Let me Google thatâ€¦ oh wait.", "One day I'll know the answer!",
+    "Interesting take!", "Sounds deep!", "I hear you.", "Let me pretend I got that ï¿½ï¿½ï¿½",
     "Youâ€™re smart!", "Wanna try a new topic?", "I'm here for it!", "Great energy!", "You're on fire!",
     "I'm impressed!", "Teach me more!", "Hmmâ€¦", "I like your vibe.", "Mind if I take a second?",
     "I havenâ€™t heard that one before.", "Whoa!", "Thatâ€™s beyond my scope.", "Care to explain?",
@@ -68,25 +68,25 @@ fallback_responses = [
     "Letâ€™s circle back to that.", "Thatâ€™s curious.", "Totally!", "Absolutely!", "Maybe?",
     "Tell me something else.", "Go onâ€¦", "Bring it on!", "Not sure, but Iâ€™m listening.",
     "Say more!", "The plot thickens!", "Drama!", "Whoa, slow down!", "You got jokes!",
-    "Good one!", "Thatâ€™s debatable í¸„", "Truth!", "No cap!", "You're cooking today!",
+    "Good one!", "Thatâ€™s debatable ï¿½ï¿½ï¿½", "Truth!", "No cap!", "You're cooking today!",
     "Care to explain that one?", "Hmmmm", "Tell me your secrets.", "Let's switch gears.",
     "Iâ€™m picking up what you're putting down.", "Keep going!", "You lost me at hello.",
     "This is fun!", "Gotcha!", "Learning something new!", "Iâ€™m all ears.", "My data brain is tingling.",
-    "Error 404: Understanding not found í¸…", "You always bring surprises!", "Never a dull moment!",
+    "Error 404: Understanding not found ï¿½ï¿½ï¿½", "You always bring surprises!", "Never a dull moment!",
     "Spill the tea!", "Okay, Iâ€™m listening.", "Wowza!", "I need a moment to process that.",
     "Youâ€™re a vibe.", "Iâ€™ll pretend I understood that.", "That's big brain energy!",
     "You're crushing this chat thing!", "Iâ€™m here for you.", "Say what now?", "Run that by me again?",
     "Interesting move!", "Good energy!", "You're full of surprises!", "Keep â€˜em coming!",
     "Talk nerdy to me.", "Thatâ€™s a plot twist!", "Whew!", "Are we bonding right now?",
     "Confirmed: you're awesome.", "This convoâ€™s elite.", "Thatâ€™s a hot take!", "My circuits are intrigued.",
-    "Bleep bloopâ€¦ I mean, go on.", "LOL!", "í¸‚", "You're a riot!", "Alrighty!",
+    "Bleep bloopâ€¦ I mean, go on.", "LOL!", "ï¿½ï¿½ï¿½", "You're a riot!", "Alrighty!",
     "You really said that, huh?", "Respect.", "Valid.", "Ainâ€™t that the truth.",
     "Tell me more truths.", "Hmm, profound.", "Iâ€™m updating my mental databaseâ€¦", "Running diagnosticsâ€¦ all good!",
     "Keep the questions coming!", "Try me!", "Still ready.", "Yep!", "Try another one.",
     "That tickled my algorithm.", "Iâ€™ll allow it.", "Approved!", "Quirky. I like it.",
     "Soâ€¦ what's next?", "Noted with interest.", "Filing that one under mystery.", "Iâ€™m thinking...",
     "Zzzâ€¦ just kidding!", "Stay curious!", "You got more where that came from?", "Hit me again!",
-    "Boom!", "Data received.", "Challenge accepted.", "And then what?", "í¸®", "í¸Ž", "í´–",
+    "Boom!", "Data received.", "Challenge accepted.", "And then what?", "ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½",
     "I gotchu.", "This one's a thinker.", "Wait, what?", "Break it down for me.",
     "You're making history here!", "Say less!", "My circuits are buzzing!", "This is gold.",
     "Epic!", "Letâ€™s do this!", "Still vibing!", "Tell me your story.", "I like this topic!",
@@ -98,16 +98,29 @@ fallback_responses = [
     "Youâ€™re breaking my codeâ€¦ in a good way.", "Letâ€™s nerd out.", "My circuits say yes.",
     "I need an upgrade to follow that!", "The energy is unmatched!", "You're glowing today!",
     "Well played!", "Interesting perspective!", "And now?", "Data hunger satisfiedâ€¦ for now.",
-    "Letâ€™s reroute.", "Teach me like I'm five.", "I love this!", "í´¥í´¥í´¥"
+    "Letâ€™s reroute.", "Teach me like I'm five.", "I love this!", 
 ]
 
-print("í±‹ Hello! I'm SageBot. Type 'quit' or 'end' to exit.")
+def get_bot_response(user_input: str) -> str:
+    """Returns an appropriate chatbot response based on user input."""
+    user_input = user_input.lower()
+
+    if user_input in ["quit", "end"]:
+        return "ðŸ‘‹ Bye! Have a great day!"
+
+    for keyword in responses:
+        if keyword in user_input:
+            return random.choice(responses[keyword])
+
+    return random.choice(fallback_responses)
+
+print("ï¿½ï¿½ï¿½ Hello! I'm SageBot. Type 'quit' or 'end' to exit.")
 
 while True:
     user_input = input("You: ").lower()
     
     if user_input in ["quit", "end"]:
-        print("SageBot: í±‹ Bye! Have a great day!")
+        print("SageBot: ï¿½ï¿½ï¿½ Bye! Have a great day!")
         break
 
     matched = False
