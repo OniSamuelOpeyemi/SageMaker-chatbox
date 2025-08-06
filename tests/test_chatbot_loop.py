@@ -13,8 +13,8 @@ def test_chatbot_response(monkeypatch):
 
     expected_outputs = []
 
-    def fake_print(msg):
-        expected_outputs.append(msg)
+    def fake_print(*args, **kwargs):
+        expected_outputs.append(" ".join(str(arg) for arg in args))
 
     monkeypatch.setattr('builtins.print', fake_print)
 
