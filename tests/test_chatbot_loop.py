@@ -1,28 +1,32 @@
-import builtins
-from chatbot_loop import chatbot_loop  # Make sure this import path is correct
+import pytest
+from unittest.mock import MagicMock, patch
 
-def test_chatbot_response(monkeypatch):
-    # Simulated user inputs
-    inputs = iter(["hello", "end"])
-    monkeypatch.setattr(builtins, "input", lambda _: next(inputs))
+# Import your chatbot module here
+# from your_script import chatbot_session
 
-    # Capture printed outputs
-    printed_lines = []
+@pytest.fixture
+def mock_predictor():
+    predictor = MagicMock()
+    # Simulate model response as JSON string
+    predictor.predict.return_value = '{"generated_text": "Hello, how can I help you?"}'
+    return predictor
 
-    def fake_print(*args, **kwargs):
-        line = " ".join(str(arg) for arg in args)
-        printed_lines.append(line)
-
-    monkeypatch.setattr(builtins, "print", fake_print)
-
-    # Run the chatbot loop
-    chatbot_loop()
-
-    # Debug: print all lines (optional)
-    # for line in printed_lines:
-    #     print(f"> {line}")
-
-    # Assertion checks
-    assert any("Chatbot: Hello!" in line for line in printed_lines), "Greeting not found"
-    assert any("Chatbot: You said 'hello'" in line for line in printed_lines), "Expected response for 'hello' not found"
-    assert any("Chatbot: Goodbye!" in line for line in printed_lines), "Goodbye message not found"
+def test_chatbot_interaction(monkeypatch, mock_predictor):
+    # Simulate user inputs: one message then exit
+    inputs = iter(["Hello", "quit"])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    
+    outputs = []
+    monkeypatch.setattr('builtins.print', lambda x: outputs.append(x))
+    
+    # Run the chatbot session (replace with your actual function!)
+    # chatbot_session(mock_predictor)
+    
+    # Check model was called with user input formatted as JSON
+    mock_predictor.predict.assert_any_call('{"input_text": "Hello"}')
+    
+    # Check output parsing and display
+    assert any("Hello, how can I help you?" in o for o in outputs)
+    
+    # Check quit command ends loop
+    assert any("Exiting chatbot" in o or "Goodbye" in o for o in outputs)
