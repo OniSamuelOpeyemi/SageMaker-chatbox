@@ -1,32 +1,22 @@
 import pytest
-from unittest.mock import MagicMock, patch
+from chatbot_loop import get_bot_response
 
-# Import your chatbot module here
-# from your_script import chatbot_session
+def test_get_bot_response_known_keywords():
+    assert get_bot_response("hello") in [
+        "Hi there!", "Hello!", "Hey!", "Good to see you!",
+        "Greetings!", "Howdy!", "Yo!", "Hi friend!", "Welcome!", "Hello human!"
+    ]
+    assert get_bot_response("how are you") in [
+        "I'm doing well, thanks!", "Running smoothly!", "Feeling fantastic!",
+        "I'm just code, but I feel electric today!", "100% uptime vibes."
+    ]
+    assert get_bot_response("quit") == "👋 Bye! Have a great day!"
+    assert get_bot_response("end") == "👋 Bye! Have a great day!"
 
-@pytest.fixture
-def mock_predictor():
-    predictor = MagicMock()
-    # Simulate model response as JSON string
-    predictor.predict.return_value = '{"generated_text": "Hello, how can I help you?"}'
-    return predictor
-
-def test_chatbot_interaction(monkeypatch, mock_predictor):
-    # Simulate user inputs: one message then exit
-    inputs = iter(["Hello", "quit"])
-    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
-    
-    outputs = []
-    monkeypatch.setattr('builtins.print', lambda x: outputs.append(x))
-    
-    # Run the chatbot session (replace with your actual function!)
-    # chatbot_session(mock_predictor)
-    
-    # Check model was called with user input formatted as JSON
-    mock_predictor.predict.assert_any_call('{"input_text": "Hello"}')
-    
-    # Check output parsing and display
-    assert any("Hello, how can I help you?" in o for o in outputs)
-    
-    # Check quit command ends loop
-    assert any("Exiting chatbot" in o or "Goodbye" in o for o in outputs)
+def test_get_bot_response_unknown_keyword():
+    # Should return one of the fallback_responses
+    unknown = "unrecognized input"
+    assert get_bot_response(unknown) in [
+        "That's interesting!", "Could you elaborate?", "I'm learning more every day!",
+        "Sorry, I didn’t catch that.", "Tell me more.", "Hmm, go on…", "Okay!", "Nice!", "Cool!", "Wow!"
+    ]
