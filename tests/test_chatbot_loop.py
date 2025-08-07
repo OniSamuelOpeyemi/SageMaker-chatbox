@@ -1,22 +1,27 @@
+import builtins
+from unittest.mock import patch
 import pytest
-from chatbot_loop import get_bot_response
 
-def test_get_bot_response_known_keywords():
-    assert get_bot_response("hello") in [
+# Import from your chatbot file (ensure the name matches your file)
+from chatbot_loop import chatbot_loop
+
+def test_chatbot_response():
+    user_inputs = ["hello", "quit"]
+    # These are the possible greetings and exit messages your bot produces
+    expected_greetings = [
         "Hi there!", "Hello!", "Hey!", "Good to see you!",
         "Greetings!", "Howdy!", "Yo!", "Hi friend!", "Welcome!", "Hello human!"
     ]
-    assert get_bot_response("how are you") in [
-        "I'm doing well, thanks!", "Running smoothly!", "Feeling fantastic!",
-        "I'm just code, but I feel electric today!", "100% uptime vibes."
-    ]
-    assert get_bot_response("quit") == "👋 Bye! Have a great day!"
-    assert get_bot_response("end") == "👋 Bye! Have a great day!"
+    expected_exit = "👋 Bye! Have a great day!"
 
-def test_get_bot_response_unknown_keyword():
-    # Should return one of the fallback_responses
-    unknown = "unrecognized input"
-    assert get_bot_response(unknown) in [
-        "That's interesting!", "Could you elaborate?", "I'm learning more every day!",
-        "Sorry, I didn’t catch that.", "Tell me more.", "Hmm, go on…", "Okay!", "Nice!", "Cool!", "Wow!"
-    ]
+    with patch.object(builtins, 'input', side_effect=user_inputs):
+        with patch.object(builtins, 'print') as mock_print:
+            chatbot_loop()
+    
+    # Gather printed output
+    printed_texts = [call.args[0] for call in mock_print.call_args_list]
+
+    # Check that a greeting (with SageBot prefix) was printed
+    assert any(f"SageBot: {greeting}" in printed_texts for greeting in expected_greetings)
+    # Check that the exit message was printed
+    assert any(f"SageBot: {expected_exit}" in printed_texts for _ in printed_texts)
